@@ -1,16 +1,20 @@
 let canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth - 10;
+canvas.width = window.innerWidth;
 canvas.height = window.innerHeight - 10;
 let c = canvas.getContext("2d");
 
+let BoxW = 60 
+let BoxH;
 let BoxMove = false;
 let BoxY = 50;
-let BoxX = window.innerWidth / 2;
+let BoxX = window.innerWidth / 2 - BoxW;
 let BoxSP = 1;
 
 let Boxtxt = ["Size +","Size -","back","ball +","ball -"];
 let boxtxt2 = "";
+let boxColor;
 let boxWhich = 0;
+
 
 let sizeup = false;
 
@@ -22,16 +26,17 @@ let sizeup = false;
 let score1 = 0, score2 = 0;
 let speed = [-7, 7];
 
-let paddle2X = window.innerWidth - 35;
+let paddle2X = window.innerWidth - 40;
 let paddle2Y = window.innerHeight / 2 - 100;
 c.fillStyle = "red";
-let paddle1X = 20;
+let paddle1X = 30;
 let paddle1Y = window.innerHeight / 2 - 100;
 paddle1Color = "red";
 paddle2Color = "aqua";
 
 let paddle1H = 150;
 let paddle2H = 150;
+
 c.fillRect(paddle1X, paddle1Y, 20, paddle1H);
 
 c.fillStyle = "aqua";
@@ -77,7 +82,7 @@ function frame() {
     //     }
 
     if(boxWhich == 1){
-        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             if(paddle1H < 190){
@@ -85,7 +90,7 @@ function frame() {
             }
         }
     
-        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             if(paddle2H < 190){
@@ -104,7 +109,7 @@ function frame() {
     //     }
 
     if(boxWhich == 2){
-        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             if(paddle1H > 110){
@@ -112,7 +117,7 @@ function frame() {
             }
         }
     
-        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             if(paddle2H > 110){
@@ -122,14 +127,14 @@ function frame() {
     }
 
     if(boxWhich == 3){
-        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY =-30;
             BoxMove = false;
             ballSpeedX = -ballSpeedX;
             ballSpeedY = -ballSpeedY;
             boxWhich = 0;
         }
-        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             ballSpeedX = -ballSpeedX;
@@ -142,12 +147,12 @@ function frame() {
     }
 
     if(boxWhich == 4){
-        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             r = 35;
         }
-        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             r = 35;
@@ -157,12 +162,12 @@ function frame() {
     }
 
     if(boxWhich == 5){
-        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX >= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             r = 5;
         }
-        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+120 && ballY > BoxY-10 && ballY <= BoxY+20){
+        if(ballSpeedX <= 0 && ballX > BoxX-10 && ballX <= BoxX+BoxW && ballY > BoxY-10 && ballY <= BoxY+BoxH){
             BoxY = -30;
             BoxMove = false;
             r = 5;
@@ -173,129 +178,216 @@ function frame() {
 
     //(ballX <= paddle1X + 20 && ballY + r >= paddle1Y - 15 && ballY + r < paddle1Y + paddle1H+25)
     // Check collision with left paddle
-    if (ballX - r <= paddle1X + 25 && ballY + r >= paddle1Y-5  && ballY - r <= paddle1Y + paddle1H+5 && ballSpeedX <0) {
-        if(goodHit1 == 0){
-            document.querySelector("#r").innerHTML = "";
-            document.querySelector("#b").innerHTML = "";
-        }
-        if (Math.abs(ballSpeedX) < 30) { // Maximum speed is 30
-            ballSpeedX *= 1.2; // increase speed
-            ballSpeedY *= 1.05;
-            // document.querySelector("#r").innerHTML = "";
-            // document.querySelector("#b").innerHTML = "";
-            // document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
-        }
-        ballSpeedX = -ballSpeedX; // reverse direction
+    if(Math.abs(ballSpeedX)<=25){
         
-        if (paddle1Speed > 0 && ballSpeedY < 0) {
-            ballSpeedY = -ballSpeedY;
-        }
-        if (paddle1Speed < 0 && ballSpeedY > 0) {
-            ballSpeedY = -ballSpeedY;
-        }
 
-    //     if (Math.abs(ballSpeedX) >= 25) {
-    //         if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
-    //             goodHit1++;
-    //             document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
-    //             console.log('lo', goodHit1)
-    //             if (goodHit1 >= 3) {
-    //                 ballSpeedX *= 2;
-    //                 ballSpeedY *= 1.6;
-    //                 goodHit1 = 0;
-    //                 document.querySelector("#r").innerHTML = "BOOOOOM!!!";
-    //             }
-    //     }
-    //     else {
-    //         goodHit1 = 0;
-    //     }
-    // }
-
-    if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
-        if (Math.abs(ballSpeedX) >= 25) {
-            goodHit1++;
-            document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
-            console.log('lo', goodHit1)
-            if (goodHit1 >= 3) {
-                 ballSpeedX *= 2;
-                 ballSpeedY *= 1.6;
-                 goodHit1 = 0;
-                 document.querySelector("#r").innerHTML = "BOOOOOM!!!";
+        leftHit:if (ballX - r <= paddle1X + 20 && ballY + r >= paddle1Y  && ballY - r <= paddle1Y + paddle1H && ballSpeedX <0) {
+            if(ballX - r <= 25 && ballSpeedX <0){
+                goodHit1 = 0;
+                document.querySelector("#r").innerHTML = "";
+                ballSpeedY = -ballSpeedY
+                break leftHit;
+            }
+            if(goodHit1 == 0){
+                document.querySelector("#r").innerHTML = "";
+                document.querySelector("#b").innerHTML = "";
+            }
+            if (Math.abs(ballSpeedX) < 30) { // Maximum speed is 30
+                ballSpeedX *= 1.2; // increase speed
+                ballSpeedY *= 1.05;
+            }
+            ballSpeedX = -ballSpeedX; // reverse direction
+            
+            if (paddle1Speed > 0 && ballSpeedY < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if (paddle1Speed < 0 && ballSpeedY > 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+    
+    
+        if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
+            if (Math.abs(ballSpeedX) >= 25) {
+                goodHit1++;
+                document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
+                console.log('lo', goodHit1)
+                if (goodHit1 >= 3) {
+                     ballSpeedX *= 2;
+                     ballSpeedY *= 1.6;
+                     goodHit1 = 0;
+                     document.querySelector("#r").innerHTML = "BOOOOOM!!!";
+                }
+            }else{
+                goodHit1 = 0;
+                document.querySelector("#r").innerHTML = "";
             }
         }else{
             goodHit1 = 0;
             document.querySelector("#r").innerHTML = "";
         }
-    }else{
-        goodHit1 = 0;
-        document.querySelector("#r").innerHTML = "";
     }
-}
 
-    if (ballY <= 0 + 10 || ballY >= window.innerHeight - 10) {
+
+}else{
+
+
+        leftHit:if (ballX - r <= paddle1X + 24 && ballY + r >= paddle1Y  && ballY - r <= paddle1Y + paddle1H && ballSpeedX <0) {
+            if(ballX - r <= 25 && ballSpeedX <0){
+                goodHit1 = 0;
+                document.querySelector("#r").innerHTML = "";
+                ballSpeedY = -ballSpeedY
+                break leftHit;
+            }
+            if(goodHit1 == 0){
+                document.querySelector("#r").innerHTML = "";
+                document.querySelector("#b").innerHTML = "";
+            }
+            if (Math.abs(ballSpeedX) < 30) { // Maximum speed is 30
+                ballSpeedX *= 1.2; // increase speed
+                ballSpeedY *= 1.05;
+            }
+            ballSpeedX = -ballSpeedX; // reverse direction
+            
+            if (paddle1Speed > 0 && ballSpeedY < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if (paddle1Speed < 0 && ballSpeedY > 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+
+
+        if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
+            if (Math.abs(ballSpeedX) >= 25) {
+                goodHit1++;
+                document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
+                console.log('lo', goodHit1)
+                if (goodHit1 >= 3) {
+                    ballSpeedX *= 2;
+                    ballSpeedY *= 1.6;
+                    goodHit1 = 0;
+                    document.querySelector("#r").innerHTML = "BOOOOOM!!!";
+                }
+            }else{
+                goodHit1 = 0;
+                document.querySelector("#r").innerHTML = "";
+            }
+        }else{
+            goodHit1 = 0;
+            document.querySelector("#r").innerHTML = "";
+        }
+    }
+
+}
+    
+
+    if (ballY <= 10 || ballY >= window.innerHeight - 10) {
         ballSpeedY = -ballSpeedY
     }
 
+    if(Math.abs(ballSpeedX) <= 25){
 
-    if (ballX >= paddle2X - 20 && ballY + r >= paddle2Y - 5 && ballY - r <= paddle2Y + paddle2H+5 && ballSpeedX > 0) {
-        if(goodHit2 == 0){
-            document.querySelector("#b").innerHTML = ""
-            document.querySelector("#r").innerHTML = "";
-        }
-        if (ballSpeedX < 30 && ballSpeedX > -30) {
-            ballSpeedX *= 1.2;
-            ballSpeedY *= 1.05;
-            // document.querySelector("#r").innerHTML = "";
-            // document.querySelector("#b").innerHTML = "";
-            // document.querySelector("#b").innerHTML = `x${goodHit1} Combo !`;
-        }
 
-        ballSpeedX = -ballSpeedX
-        if (paddle2Speed > 0 && ballSpeedY < 0) {
-            ballSpeedY = -ballSpeedY;
-        }
-        if (paddle2Speed < 0 && ballSpeedY > 0) {
-            ballSpeedY = -ballSpeedY;
-        }
-
-        // if (Math.abs(ballSpeedX) >= 25) {
-        //     if (ballX >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
-        //         goodHit2++;
-        //         document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
-        //     document.querySelector("#b").innerHTML = "";
-        //         console.log('lo', goodHit2)
-        //         if (goodHit2 >= 3) {
-        //             ballSpeedX *= 2;
-        //             ballSpeedY *= 1.6;
-        //             goodHit2 = 0;
-        //             document.querySelector("#b").innerHTML = "BOOOOOM!!!";
-        //         }
-        //     } else {
-        //         goodHit2 = 0;
-        //     }
-        // }
-
-        if (ballX + r >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
-            if (Math.abs(ballSpeedX) >= 25) {
-                goodHit2++;
-                document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
-                console.log('lo', goodHit1)
-                if (goodHit2 >= 3) {
-                    ballSpeedX *= 2;
-                    ballSpeedY *= 1.6;
+        rightHit:if (ballX + r >= paddle2X && ballY + r >= paddle2Y && ballY - r <= paddle2Y + paddle2H && ballSpeedX > 0) {
+            if(ballX + r >= paddle2X + 25 && ballSpeedX > 0){
+                goodHit2 = 0;
+                document.querySelector("#b").innerHTML = "";
+                ballSpeedY = -ballSpeedY
+                break rightHit;
+            }
+            if(goodHit2 == 0){
+                document.querySelector("#b").innerHTML = ""
+                document.querySelector("#r").innerHTML = "";
+            }
+            if (ballSpeedX < 30 && ballSpeedX > -30) {
+                ballSpeedX *= 1.2;
+                ballSpeedY *= 1.05;
+            }
+    
+            ballSpeedX = -ballSpeedX
+            if (paddle2Speed > 0 && ballSpeedY < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if (paddle2Speed < 0 && ballSpeedY > 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+    
+    
+            if (ballX + r >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
+                if (Math.abs(ballSpeedX) >= 25) {
+                    goodHit2++;
+                    document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
+                    console.log('lo', goodHit1)
+                    if (goodHit2 >= 3) {
+                        ballSpeedX *= 2;
+                        ballSpeedY *= 1.6;
+                        goodHit2 = 0;
+                        document.querySelector("#b").innerHTML = "BOOOOOM!!!";
+                    }
+                }else{
                     goodHit2 = 0;
-                    document.querySelector("#b").innerHTML = "BOOOOOM!!!";
+                    document.querySelector("#b").innerHTML = "";
                 }
+    
             }else{
                 goodHit2 = 0;
                 document.querySelector("#b").innerHTML = "";
             }
-
-        }else{
-            goodHit2 = 0;
-            document.querySelector("#b").innerHTML = "";
         }
+
+
+    }else{
+
+
+        rightHit:if (ballX + r >= paddle2X-4 && ballY + r >= paddle2Y && ballY - r <= paddle2Y + paddle2H && ballSpeedX > 0) {
+            if(ballX + r >= paddle2X + 25 && ballSpeedX > 0){
+                goodHit2 = 0;
+                document.querySelector("#b").innerHTML = "";
+                ballSpeedY = -ballSpeedY
+                break rightHit;
+            }
+            if(goodHit2 == 0){
+                document.querySelector("#b").innerHTML = ""
+                document.querySelector("#r").innerHTML = "";
+            }
+            if (ballSpeedX < 30 && ballSpeedX > -30) {
+                ballSpeedX *= 1.2;
+                ballSpeedY *= 1.05;
+            }
+    
+            ballSpeedX = -ballSpeedX
+            if (paddle2Speed > 0 && ballSpeedY < 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if (paddle2Speed < 0 && ballSpeedY > 0) {
+                ballSpeedY = -ballSpeedY;
+            }
+    
+    
+            if (ballX + r >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
+                if (Math.abs(ballSpeedX) >= 25) {
+                    goodHit2++;
+                    document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
+                    console.log('lo', goodHit1)
+                    if (goodHit2 >= 3) {
+                        ballSpeedX *= 2;
+                        ballSpeedY *= 1.6;
+                        goodHit2 = 0;
+                        document.querySelector("#b").innerHTML = "BOOOOOM!!!";
+                    }
+                }else{
+                    goodHit2 = 0;
+                    document.querySelector("#b").innerHTML = "";
+                }
+    
+            }else{
+                goodHit2 = 0;
+                document.querySelector("#b").innerHTML = "";
+            }
+        }
+
+
     }
+    
 
 
 
@@ -309,6 +401,9 @@ function frame() {
         ballY = window.innerHeight / 2;
         ballSpeedY = speed[random(0, 1)];
         ballSpeedX = speed[random(0, 1)];
+        r = 10
+        goodHit1 = 0;
+        goodHit2 = 0;
     }
     // y=window.innerWidth / 2;
     // x=window.innerWidth / 2;
@@ -321,6 +416,9 @@ function frame() {
         ballY = window.innerHeight / 2;
         ballSpeedY = speed[random(0, 1)];
         ballSpeedX = speed[random(0, 1)];
+        r = 10
+        goodHit1 = 0;
+        goodHit2 = 0;
     }
 
 
@@ -356,10 +454,15 @@ function frame() {
         c.clearRect(0, 0, canvas.width, canvas.height);
 
         if(BoxMove == null){
-            c.fillStyle = "gold";
+            let boxRandomX = [-7,-5,-2,2,5,7];
+            c.fillStyle = boxColor;
             c.fillText
             c.font = "30px Arial";
-            c.fillText(boxtxt2,BoxX,BoxY+=1);
+            c.shadowColor = boxColor;
+            c.shadowBlur = 20;
+            BoxW = c.measureText(boxtxt2).width;
+            BoxH = c.measureText(boxtxt2).actualBoundingBoxAscent + c.measureText(boxtxt2).actualBoundingBoxDescent;
+            c.fillText(boxtxt2,BoxX+=boxRandomX[random(0,5)],BoxY+=1);
         }
         c.beginPath();
         c.arc(ballX += ballSpeedX, ballY += ballSpeedY, r, 0, Math.PI * 2); // circle
@@ -463,15 +566,27 @@ function timeout(){
         boxtxt2 = Boxtxt[random(0,4)];
         if(boxtxt2 == Boxtxt[0]){
             boxWhich = 1;
+            boxColor = "green"
         }else if(boxtxt2 == Boxtxt[1]){
             boxWhich = 2;
+            boxColor = "red"
         }else if(boxtxt2 == Boxtxt[2]){
             boxWhich = 3;
+            boxColor = "red"
         }else if(boxtxt2 == Boxtxt[3]){
             boxWhich = 4;
+            boxColor = "yellow"
         }else if(boxtxt2 == Boxtxt[4]){
             boxWhich = 5;
+            boxColor = "yellow"
         }
-        boxtxt2 = "take me";
+        boxtxt2 = "TakeMe!";
     },10000)
 }
+window.addEventListener("resize",e=>{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight - 10;
+    paddle2X = window.innerWidth - 40;
+    paddle2Y = window.innerHeight / 2 - 100;
+    BoxX = window.innerWidth / 2 - BoxW;
+})
