@@ -209,7 +209,7 @@ function frame() {
         if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
             if (Math.abs(ballSpeedX) >= 25) {
                 goodHit1++;
-                document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
+                document.querySelector("#r").innerHTML = `Combo X${goodHit1}!`;
                 console.log('lo', goodHit1)
                 if (goodHit1 >= 3) {
                      ballSpeedX *= 2;
@@ -231,7 +231,7 @@ function frame() {
 }else{
 
 
-        leftHit:if (ballX - r <= paddle1X + 24 && ballY + r >= paddle1Y  && ballY - r <= paddle1Y + paddle1H && ballSpeedX <0) {
+        leftHit:if ((ballX+ballSpeedX) - r <= paddle1X && ballY + r >= paddle1Y && ballY - r <= paddle1Y + paddle1H && ballSpeedX <0) {
             if(ballX - r <= 25 && ballSpeedX <0){
                 goodHit1 = 0;
                 document.querySelector("#r").innerHTML = "";
@@ -240,7 +240,6 @@ function frame() {
             }
             if(goodHit1 == 0){
                 document.querySelector("#r").innerHTML = "";
-                document.querySelector("#b").innerHTML = "";
             }
             if (Math.abs(ballSpeedX) < 30) { // Maximum speed is 30
                 ballSpeedX *= 1.2; // increase speed
@@ -256,10 +255,14 @@ function frame() {
             }
 
 
-        if (ballX <= paddle1X + 20 && ballY > paddle1Y + 30 && ballY < paddle1Y + 110) {
+        if (ballX - r - ballSpeedX <= paddle1X + 20 && ballY > paddle1Y + 40 && ballY < paddle1Y + 100) {
             if (Math.abs(ballSpeedX) >= 25) {
                 goodHit1++;
-                document.querySelector("#r").innerHTML = `x${goodHit1} Combo !`;
+                document.querySelector("#r").innerHTML = `Combo X${goodHit1}!`;
+                document.querySelector("#r").classList.add('rb-animation');
+                setTimeout(() => {
+                    document.querySelector("#r").classList.remove('rb-animation');
+                }, 800)
                 console.log('lo', goodHit1)
                 if (goodHit1 >= 3) {
                     ballSpeedX *= 2;
@@ -280,7 +283,7 @@ function frame() {
 }
     
 
-    if (ballY <= 10 || ballY >= window.innerHeight - 10) {
+    if (ballY-r <= 10 || ballY+r >= window.innerHeight - 10) {
         ballSpeedY = -ballSpeedY
     }
 
@@ -296,7 +299,7 @@ function frame() {
             }
             if(goodHit2 == 0){
                 document.querySelector("#b").innerHTML = ""
-                document.querySelector("#r").innerHTML = "";
+                document.querySelector("#r").innerHTML = ""
             }
             if (ballSpeedX < 30 && ballSpeedX > -30) {
                 ballSpeedX *= 1.2;
@@ -311,11 +314,10 @@ function frame() {
                 ballSpeedY = -ballSpeedY;
             }
     
-    
-            if (ballX + r >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
+            if (ballX + r >= paddle2X && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
                 if (Math.abs(ballSpeedX) >= 25) {
                     goodHit2++;
-                    document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
+                    document.querySelector("#b").innerHTML = `Combo X${goodHit2}!`;
                     console.log('lo', goodHit1)
                     if (goodHit2 >= 3) {
                         ballSpeedX *= 2;
@@ -324,8 +326,8 @@ function frame() {
                         document.querySelector("#b").innerHTML = "BOOOOOM!!!";
                     }
                 }else{
-                    goodHit2 = 0;
-                    document.querySelector("#b").innerHTML = "";
+                    // goodHit2 = 0;
+                    // document.querySelector("#b").innerHTML = "";
                 }
     
             }else{
@@ -338,7 +340,7 @@ function frame() {
     }else{
 
 
-        rightHit:if (ballX + r >= paddle2X-4 && ballY + r >= paddle2Y && ballY - r <= paddle2Y + paddle2H && ballSpeedX > 0) {
+        rightHit:if ((ballX+ballSpeedX) + r >= paddle2X && ballY + r >= paddle2Y && ballY - r <= paddle2Y + paddle2H && ballSpeedX > 0) {
             if(ballX + r >= paddle2X + 25 && ballSpeedX > 0){
                 goodHit2 = 0;
                 document.querySelector("#b").innerHTML = "";
@@ -347,7 +349,6 @@ function frame() {
             }
             if(goodHit2 == 0){
                 document.querySelector("#b").innerHTML = ""
-                document.querySelector("#r").innerHTML = "";
             }
             if (ballSpeedX < 30 && ballSpeedX > -30) {
                 ballSpeedX *= 1.2;
@@ -363,15 +364,23 @@ function frame() {
             }
     
     
-            if (ballX + r >= paddle2X - 10 && ballY > paddle2Y + 30 && ballY < paddle2Y + 110) {
+            if (ballX + r - ballSpeedX >= paddle2X && ballY > paddle2Y + 40 && ballY < paddle2Y + 100) {
                 if (Math.abs(ballSpeedX) >= 25) {
                     goodHit2++;
-                    document.querySelector("#b").innerHTML = `x${goodHit2} Combo !`;
+                    document.querySelector("#b").innerHTML = `Combo X${goodHit2}!`;
+                    document.querySelector("#b").classList.add('rb-animation');
+                    setTimeout(() => {
+                        document.querySelector("#b").classList.remove('rb-animation');
+                    }, 800)
                     console.log('lo', goodHit1)
                     if (goodHit2 >= 3) {
                         ballSpeedX *= 2;
                         ballSpeedY *= 1.6;
                         goodHit2 = 0;
+                        document.querySelector("#b").classList.add('rb-animation');
+                        setTimeout(() => {
+                            document.querySelector("#b").classList.remove('rb-animation');
+                        }, 800)
                         document.querySelector("#b").innerHTML = "BOOOOOM!!!";
                     }
                 }else{
@@ -404,6 +413,8 @@ function frame() {
         r = 10
         goodHit1 = 0;
         goodHit2 = 0;
+        BoxX = window.innerWidth / 2 - BoxW;
+        BoxY = -30;
     }
     // y=window.innerWidth / 2;
     // x=window.innerWidth / 2;
@@ -419,6 +430,8 @@ function frame() {
         r = 10
         goodHit1 = 0;
         goodHit2 = 0;
+        BoxX = window.innerWidth / 2 - BoxW;
+        BoxY = -30;
     }
 
 
@@ -454,7 +467,7 @@ function frame() {
         c.clearRect(0, 0, canvas.width, canvas.height);
 
         if(BoxMove == null){
-            let boxRandomX = [-7,-5,-2,2,5,7];
+            let boxRandomX = [-8,-5,-2,2,5,8];
             c.fillStyle = boxColor;
             c.fillText
             c.font = "30px Arial";
