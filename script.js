@@ -509,11 +509,10 @@ function frame() {
 
 
 document.body.addEventListener('keydown', e => {
-    console.log(e.key)
-    if (e.key == "w") {
+    if (e.key == "w" || e.key == "W") {
         paddle1Speed = -12
     }
-    if (e.key == "s") {
+    if (e.key == "s" || e.key == "S") {
         paddle1Speed = +12
     }
     if (e.key == 'ArrowUp') {
@@ -524,11 +523,10 @@ document.body.addEventListener('keydown', e => {
     }
 })
 document.body.addEventListener('keyup', e => {
-    console.log(e.key)
-    if (e.key == "w") {
+    if (e.key == "w" || e.key == "W") {
         paddle1Speed = 0
     }
-    if (e.key == "s") {
+    if (e.key == "s" || e.key == "S") {
         paddle1Speed = 0
     }
     if (e.key == 'ArrowUp') {
